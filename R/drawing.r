@@ -1,4 +1,11 @@
 
+col.alpha <- function (acol, alpha = 0.2) 
+{
+    acol <- col2rgb(acol)
+    acol <- rgb(acol[1]/255, acol[2]/255, acol[3]/255, alpha)
+    acol
+}
+
 draw_circ <- function(x=0,y=0,r=1,pts=200,...) {
     theta = seq(0, 2 * pi, length = pts)
     lines(x = r * cos(theta) + x, y = r * sin(theta) + y,...)
@@ -94,5 +101,5 @@ oiler_diagram <- function(p,alpha,beta,init=c(sqrt(p/(1-p)),1),draw_pts=0,jitter
     print(theta) # radius and offset (from center of green) of black/detection circle
 }
 
-# oiler_diagram( 0.3 , 0.8, 0.2 , draw_pts=0.12 , jitter=0.02 )
+# oiler_diagram( p=0.3 , alpha=0.8, beta=0.2 , draw_pts=0.12 , jitter=0.02 )
 
