@@ -39,12 +39,31 @@ rptcirc <- function(n=1,r=1,cx=0,cy=0,jitter=0.1,edge_buffer=0.05) {
     return(out[1:(i-1),])
 }
 
+# ring polygon - for focus effect
+ring <- function(x,y,outer,inner, border=NULL, col="white", lty=par("lty"), N=200, ...) {
+    t <- seq(0, pi, length.out=N)
+    tx <- seq(0-pi/10, pi+pi/10, length.out=N)
+    top <- cbind(c(x+cos(tx)*outer, x-cos(tx)*inner), c(y+sin(tx)*outer, y+sin(tx)*inner))
+    bot <- cbind(c(x-cos(tx)*outer, x+cos(tx)*inner), c(y-sin(tx)*outer, y-sin(tx)*inner))
+    out <- cbind(c(x+cos(t)*outer,x-cos(t)*outer),  c(y+sin(t)*outer, y-sin(t)*outer))
+    inn <- cbind(c(x-cos(t)*inner, x+cos(t)*inner), c(y+sin(t)*inner,  y-sin(t)*inner))
+    if (!is.na(col)) {
+        polygon(top, border=NA, col = col, ...)
+        polygon(bot, border=NA, col = col, ...)
+    }
+    if(!is.null(border)) {
+        lines(out, col=border, lty=lty)
+        lines(inn, col=border, lty=lty)
+    }
+}
+
 #' @export
-draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
+draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6,focus=FALSE) {
     plot( NULL , xlim=c(-2,2) , ylim=c(-2,2) , xaxt="n" , yaxt="n" , asp=1 , bty="n" , xlab="" , ylab="" )
     pp <- sqrt(p/(1-p))
     set.seed(1)
-    draw_circ(1,0,1,col="green",lwd=lwd)
+    if ( focus==FALSE )
+        draw_circ(1,0,1,col="green",lwd=lwd)
     if ( draw_pts > 0 ) {
         # green
         pts <- rptcirc(draw_pts,1,1,0,jitter=jitter )
@@ -54,7 +73,8 @@ draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
         xcex <- ifelse( det==TRUE , 1.4 , 1 )
         points( pts$x , pts$y , pch=16 , col=xcols , cex=xcex )
     }
-    draw_circ(-pp,0,pp,col="red",lwd=lwd)
+    if ( focus==FALSE )
+        draw_circ(-pp,0,pp,col="red",lwd=lwd)
     if ( draw_pts > 0 ) {
         # red
         pts <- rptcirc(draw_pts,pp,-pp,0, jitter=jitter )
@@ -81,6 +101,11 @@ draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
         lines(x = x[det], y = y[det] , lwd=6 , col="red" )
     }
 
+    if ( focus==TRUE ) {
+        # try polygon to white out vectors outside the detection circle
+        ring(1-d,0,r3,3)
+    }
+
     # detection circle on top
     draw_circ(1-d,0,r3,col="black",lwd=lwd*2,lty=1)
 }
@@ -97,11 +122,11 @@ draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
 #' @param beta Probability of false positive, p(T|F)
 #' @return Solution parameters
 #' @export
-oiler_diagram <- function(p,alpha,beta,init=c(sqrt(p/(1-p)),1),draw_pts=0,jitter=0.1) {
+oiler_diagram <- function(p,alpha,beta,init=c(sqrt(p/(1-p)),1),draw_pts=0,jitter=0.1,focus=FALSE) {
     suppressWarnings( theta <- solve_euler_diagram(p,alpha,beta,init=init)$par )
-    draw_euler( p , alpha , beta , theta[1] , theta[2] , draw_pts=draw_pts , jitter=jitter )
+    draw_euler( p , alpha , beta , theta[1] , theta[2] , draw_pts=draw_pts , jitter=jitter , focus=focus )
     print(theta) # radius and offset (from center of green) of black/detection circle
 }
 
 # oiler_diagram( p=0.3 , alpha=0.8, beta=0.2 , draw_pts=0.12 , jitter=0.02 )
-
+# oiler_diagram( p=0.3 , alpha=0.8, beta=0.2 , draw_pts=0.12 , jitter=0.02 , focus=TRUE )
