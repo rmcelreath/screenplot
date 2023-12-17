@@ -49,7 +49,8 @@ draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
         # green
         pts <- rptcirc(draw_pts,1,1,0,jitter=jitter )
         det <- pt_in_circ( pts$x , pts$y , r3 , 1-d , 0 )
-        xcols <- ifelse( det==TRUE , "green" , col.alpha("green",al) )
+        #xcols <- ifelse( det==TRUE , "green" , col.alpha("green",al) )
+        xcols <- "green"
         xcex <- ifelse( det==TRUE , 1.4 , 1 )
         points( pts$x , pts$y , pch=16 , col=xcols , cex=xcex )
     }
@@ -58,7 +59,8 @@ draw_euler <- function(p,alpha,beta,r3,d,draw_pts=20,jitter=0.1,lwd=3,al=0.6) {
         # red
         pts <- rptcirc(draw_pts,pp,-pp,0, jitter=jitter )
         det <- pt_in_circ( pts$x , pts$y , r3 , 1-d , 0 )
-        xcols <- ifelse( det==TRUE , "red" , col.alpha("red",al) )
+        #xcols <- ifelse( det==TRUE , "red" , col.alpha("red",al) )
+        xcols <- "red"
         xcex <- ifelse( det==TRUE , 1.4 , 1 )
         points( pts$x , pts$y , pch=16 , col=xcols , cex=xcex )
     }
