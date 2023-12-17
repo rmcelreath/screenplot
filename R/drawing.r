@@ -40,6 +40,7 @@ rptcirc <- function(n=1,r=1,cx=0,cy=0,jitter=0.1,edge_buffer=0.05) {
 }
 
 # ring polygon - for focus effect
+# from: https://stackoverflow.com/questions/26793768/how-do-i-draw-a-donut-polygon-in-r
 ring <- function(x,y,outer,inner, border=NULL, col="white", lty=par("lty"), N=200, ...) {
     t <- seq(0, pi, length.out=N)
     tx <- seq(0-pi/10, pi+pi/10, length.out=N)

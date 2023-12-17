@@ -1,5 +1,5 @@
 Package: screenplot
-Title: What the Package Does (One Line, Title Case)
+Title: Euler Diagrams for Mass Screening Contexts
 Version: 0.1
 Authors@R: 
     c(person("Richard", "McElreath", , "richard_mcelreath@eva.mpg.de", role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID")),

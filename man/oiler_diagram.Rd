@@ -10,7 +10,8 @@ oiler_diagram(
   beta,
   init = c(sqrt(p/(1 - p)), 1),
   draw_pts = 0,
-  jitter = 0.1
+  jitter = 0.1,
+  focus = FALSE
 )
 }
 \arguments{
