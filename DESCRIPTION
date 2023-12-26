@@ -2,8 +2,8 @@ Package: screenplot
 Title: Euler Diagrams for Mass Screening Contexts
 Version: 0.1
 Authors@R: 
-    c(person("Richard", "McElreath", , "richard_mcelreath@eva.mpg.de", role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID")),
-    person("Vera", "Wilde", , "email@email.de", role = c("aut"), comment = c(ORCID = "YOUR-ORCID-ID")))
+    c(person("Richard", "McElreath", , "richard_mcelreath@eva.mpg.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0387-5377")),
+    person("Vera", "Wilde", , "vera@verawil.de", role = c("aut"), comment = c(ORCID = "0000-0002-6470-4109")))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
